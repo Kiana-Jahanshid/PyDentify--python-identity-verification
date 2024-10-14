@@ -11,12 +11,9 @@ This App includes :
 + Celery for background tasks
 + Docker to containerize and manage these services.
 
+<br>
 
-+ face recognition package is consist of 3 part : 
- 1_ identity cart detection
- 2_ face detection
- 3_ face recognition 
-
-
- + 
-
++ face recognition package is consisting of 3 part : <br>
+ 1_ identity cart detection <br>
+ 2_ face detection <br>
+ 3_ face recognition <br>
