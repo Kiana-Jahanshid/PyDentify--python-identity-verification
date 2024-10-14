@@ -14,7 +14,7 @@ st.markdown(
 - Match your hand gesture with defined pattern 
 
 
-## 🔺 Attention 🔻:
+## 🔻 Attention 🔻:
 ### you have to allow microphone and camera acces to continue this proccess . 
 
 '''
