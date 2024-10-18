@@ -1,6 +1,6 @@
 import streamlit as st
 from streamlit.components.v1 import html
-
+TF_ENABLE_ONEDNN_OPTS=0
 
 st.title("Match your hand's gesture with patterns:")
 

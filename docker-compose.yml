@@ -1,0 +1,32 @@
+# version: "3.8"
+services :
+  backend:
+    build: ./Backend
+    ports: 
+      - "8000:8000"
+    volumes:
+      - ./Backend:/Backend
+
+
+  Frontend:
+    build: ./Frontend
+    ports: 
+      - "8501:8501"
+    volumes:
+      - ./Frontend:/Frontend
+
+  MongoDB:
+    image: mongo
+    ports:      
+      - "27017:27017"
+
+  redis:
+    image: redis
+    ports:
+      - "6379:6379"
+    
+  celery_worker:
+    build: ./Backend
+    command: celery -A tasks worker --loglevel=info
+    depends_on: 
+      - redis
