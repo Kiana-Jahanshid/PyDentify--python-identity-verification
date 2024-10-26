@@ -77,7 +77,7 @@ def classify_gesture(hand_landmarks, img_width, img_height):
     # Convert landmarks to pixel coordinates
     thumb_tip_x, thumb_tip_y = int(thumb_tip.x * img_width), int(thumb_tip.y * img_height)
     index_tip_x, index_tip_y = int(index_tip.x * img_width), int(index_tip.y * img_height)
-    middle_tip_x, middle_tip_y = int(middle_tip.x * img_width), int(middle_tip.y * img_height)
+    middle_tip_x, middle_tip_y = int(MIDDLE_FINGER_TIP.x * img_width), int(MIDDLE_FINGER_TIP.y * img_height)
 
     # Logic to classify gestures
     if thumb_tip_y < landmarks[3].y * img_height and index_tip_y > landmarks[6].y * img_height:
