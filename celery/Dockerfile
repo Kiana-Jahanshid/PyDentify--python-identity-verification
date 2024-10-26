@@ -1,1 +1,1 @@
-FROM python 
+FROM redis 

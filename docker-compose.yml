@@ -1,4 +1,4 @@
-# version: "3.8"
+version: "3.8"
 services :
   backend:
     build: ./Backend
@@ -6,6 +6,13 @@ services :
       - "8000:8000"
     volumes:
       - ./Backend:/Backend
+    depends_on:
+      - Frontend
+    environment:
+      - MONGODB_URI=mongodb://mongodb:27017/ekyc_db
+      - REDIS_URL=redis://redis:6379
+    # networks:
+    #   - ekycnetwork
 
 
   Frontend:
@@ -14,14 +21,20 @@ services :
       - "8501:8501"
     volumes:
       - ./Frontend:/Frontend
+    networks:
+    - ekycnetwork
 
   MongoDB:
     image: mongo
+    container_name: mongo_ekyc
     ports:      
       - "27017:27017"
+    depends_on:
+      - Backend
 
   redis:
     image: redis
+    container_name: redis_ekyc
     ports:
       - "6379:6379"
     
@@ -30,3 +43,7 @@ services :
     command: celery -A tasks worker --loglevel=info
     depends_on: 
       - redis
+
+
+  # networks:
+  #   ekycnetwork:
