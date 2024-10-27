@@ -1,6 +1,9 @@
 import streamlit as st
 from PIL import Image
-
+import sys
+import os
+sys.path.append(os.path.abspath(os.path.join(os.path.dirname(__file__), "../..")))
+from AI_FaceVerificatin.face_verification import faceExtraction
 
 st.title("Upload your ID-card image :")
 
@@ -13,6 +16,7 @@ if IDcard_image is not None :
     image = Image.open(IDcard_image)
     image.save("./output/idcard.jpg")
     st.image(image)
+    faceExtraction("../Frontend/output/idcard.jpg" , "idcard")
 
 st.write(" ")
 st.markdown("""<style>.white-bold-text {color: #FAFAFA;font-family: 'Thaoma', monospace;font-size: 25px;font-weight: bold;

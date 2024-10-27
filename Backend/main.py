@@ -3,6 +3,7 @@ import json
 from pymongo import MongoClient # pymongo connects FastAPI to MongoDB
 from Celery.task import add_numbers
 from AI_FaceVerificatin.face_verification import faceExtraction , faceSimilarity
+import cv2
 
 app = FastAPI()
 
@@ -32,9 +33,11 @@ def add_numbers_route(a: int, b: int):
 
 @app.get("/ekyc")
 async def ekyc():
-    faceSimilarity(idCard_face=" " , selfie_face=" ")
+    idcard_face = 1#cv2.imread("../AI_FaceVerification/cropped_images/idcard_croped_face.jpg" )
+    selfie_face = 2#cv2.imread("../AI_FaceVerification/cropped_images/selfie_croped_face.jpg" )
+    faceSimilarity(idCard_face=idcard_face , selfie_face=selfie_face)
     return {"message":"user verified ✅"}
 
 
 
-# uvicorn main:app
+# uvicorn Backend.main:app --reload --host 127.0.0.1 --port 8000

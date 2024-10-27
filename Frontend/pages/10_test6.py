@@ -21,7 +21,7 @@ def print_result(result: GestureRecognizerResult, output_image: mp.Image, timest
 
 
 options = GestureRecognizerOptions(
-    base_options=BaseOptions(model_asset_path='Frontend\hand_landmarker.task'),
+    base_options=BaseOptions(model_asset_path='F:\pyprogram\pydeploy\EKYC\PyDentify--python-identity-verification\Frontend\gesture_recognizer.task'),
     running_mode=VisionRunningMode.LIVE_STREAM,
     result_callback=print_result)
 
