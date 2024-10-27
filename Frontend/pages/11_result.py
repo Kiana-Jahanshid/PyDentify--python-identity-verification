@@ -14,15 +14,12 @@ try:
         st.success(f"Response from FastAPI: {response.text}")
         idcard = Image.open("../AI_FaceVerificatin/cropped_images/idcard_croped_face.jpg")
         selfie = Image.open("../AI_FaceVerificatin/cropped_images/selfie_croped_face.jpg")
-
         col1, col2 = st.columns(2)
-
-        # Display images side by side
         with col1:
             st.image(idcard, caption="ID-card image", use_column_width=True)
-
         with col2:
             st.image(selfie, caption="selfie image", use_column_width=True)
+
     else:
         st.error(f"Failed with status code: {response.status_code}")
 except requests.exceptions.RequestException as e:

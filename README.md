@@ -13,7 +13,3 @@ This App includes :
 
 <br>
 
-+ face recognition package is consisting of 3 part : <br>
- 1_ ID-card detection <br>
- 2_ face detection <br>
- 3_ face recognition <br>

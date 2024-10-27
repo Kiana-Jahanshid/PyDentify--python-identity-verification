@@ -2,7 +2,11 @@
 
 
 ## How to run :
-
+first run :
+```
+uvicorn Backend.main:app --reload --host 127.0.0.1 --port 8000
+```
+then run :
 ```
 streamlit run app.py
 ```
