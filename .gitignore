@@ -2,3 +2,4 @@ __pycache__
 *.toml
 *.pt
 venv/
+*.task

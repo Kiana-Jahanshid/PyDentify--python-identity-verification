@@ -16,7 +16,6 @@ def faceExtraction(image_path , task):
     cv2.imwrite(filename=f"../AI_FaceVerificatin/cropped_images/{task}_croped_face.jpg" , img=cropped_face)
 
 def faceSimilarity(idCard_face_path , selfie_face_path):
-
     res = DeepFace.verify(img1_path=idCard_face_path , img2_path=selfie_face_path , model_name="Facenet512")
     print(res["distance"])
     if res["distance"] < 0.5 :

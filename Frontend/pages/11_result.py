@@ -6,7 +6,7 @@ import sys
 sys.path.append(os.path.abspath(os.path.join(os.path.dirname(__file__), "../..")))
 
 
-fastapi_url = "http://127.0.0.1:8000/ekyc"
+fastapi_url = "http://127.0.0.1:8000/ekyc/face"
 
 try:
     response = requests.get(fastapi_url , proxies={'http':'','https':''})
