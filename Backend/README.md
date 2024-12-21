@@ -2,8 +2,13 @@
 
 # How to run :
 
-## 1_ run redis docker container  <br>
++ in windows , Docker desktop needs to be open while using from docker containers.
+
+<br>
+
+## 1_ run REDIS docker container  <br>
 open a new terminal :
+redis is dependent on celery for running.
 
 ```
 cd Backend
@@ -12,10 +17,11 @@ docker pull redis
 docker run --name redis-ekyc -d -p 6379:6379 redis
 
 # other times , only need to start/run container  :
-docker start redis-ekyc
+docker start redis-ekyc 
 ```
 
-##  2_ Run celery tasks <br>
+##  2_ Run CELERY tasks <br>
+
 open another terminal :
 
 ```
@@ -31,7 +37,8 @@ celery -A celery_tasks worker --pool=solo -l info --concurrency=1
 
 <br>
 
-## 3_ Run Mongo container :
+## 3_ Run MongoDB container :
+Because fastapi uses database file , we have to run this container before running main file. 
 ```
 docker pull mongo
 

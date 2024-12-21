@@ -7,4 +7,3 @@ celery
 redis
 uvicorn
 passlib
-bcrypt
