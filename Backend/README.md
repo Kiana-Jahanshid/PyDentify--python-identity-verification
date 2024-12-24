@@ -69,11 +69,17 @@ uvicorn app:app --reload --host 127.0.0.1 --port 8080
 
 ```
 
+## 6_ a new terminal for frontend(streamlit):
+```
+cd Frontend
+streamlit run app.py
+```
+
 ## until now, we have opened 4 terminals :
-### 1_ redis
-### 2_ celery
-### 3_ fastapi (main)
-### 4_ Gesture API
+###  redis
+###  celery
+###  fastapi (main)
+###  Gesture API
 
 
 <br>

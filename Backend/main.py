@@ -42,12 +42,13 @@ def verify_password(plain_password:str , hashed_password:str) -> bool:
 
 
 # convert email to token
-def create_accesss_token(data: dict) -> str :
-    to_encode = data.copy()
+def create_accesss_token(email_data: dict) -> str :
+    to_encode = email_data.copy()
     # each token will be expire after 30 minutes 
     expire = datetime.datetime.now(datetime.timezone.utc) + timedelta(minutes=30)
     to_encode.update({"exp":expire})
-    return jwt.encode(to_encode , "secret-key" , algorithm="HS256")
+    token = jwt.encode(to_encode , "secret-key" , algorithm="HS256")
+    return token
 
 
 # convert token to email
@@ -96,16 +97,27 @@ def signup(request:SignUpRequest):
     return {"message" : "user registered successfully."}
 
 
-# this func , is going to create token
+# this func , is going to create token , and then return that access token
 @app.post("/signin" , response_model=TokenResponse)
 def signin(request: SignInRequest):
     user = User.objects(email=request.email).first()
     if not user or not verify_password(request.password  , user.hashed_password):
         raise HTTPException(status_code=401 , detail="invalid email or password")
     # if user exists :
-    access_token = create_accesss_token(data={"email":user.email})
-    return {"access_token":access_token , "token_type":"bearer"}
+    access_token = create_accesss_token(email_data={"email":user.email})
+    return {"access_token":access_token , "token_type":"Bearer"}
 
+
+@app.get("/notprotected") # for using t his api user doesnt need to any access token
+def test1():
+    return {"message":"Hello everyone"}
+
+
+@app.get("/protected") # only users with access token can call this api
+def test2(current_user:str=Depends(get_current_user)):
+    return {
+        "message": f"Hello {current_user} you have access to this route "
+    }
 
 @app.post("/signout")
 def signout(token: str = Depends(decode_access_token)):
@@ -125,32 +137,40 @@ def signout(token: str = Depends(decode_access_token)):
 
 
 @app.post("/ekyc/face2")
-async def face2(image:UploadFile):
-    image = await image.read() # output of read function is bytes like
-    task = face_task.delay(image) # this output will be generated instantly , without delay . but in face_task function , outputs will return after delay
-    return {
-        "task_id":task.id ,
-        "status":task.state }
+async def face2(image:UploadFile , current_user: str=Depends(get_current_user)):
+    if current_user :
+        image = await image.read() # output of read function is bytes like
+        task = face_task.delay(image) # this output will be generated instantly , without delay . but in face_task function , outputs will return after delay
+        return {
+            "task_id":task.id ,
+            "status":task.state }
+    else :
+        return {"Error":" You have not signed in yet ❌"}
 
 
 @app.post("/ekyc/speech")
-async def speech(voice:UploadFile):
-    voice = await voice.read()
-    task = speech_task.delay(voice)
-    return {
-        "task_id":task.id ,
-        "status":task.state }
-
+async def speech(voice:UploadFile , current_user: str=Depends(get_current_user)):
+    if current_user :
+        voice = await voice.read()
+        task = speech_task.delay(voice)
+        return {
+            "task_id":task.id ,
+            "status":task.state }
+    else:
+        return {"Error":" You have not signed in yet ❌"}
 
 @app.post("/ekyc/gesture")
-async def gesture(image:UploadFile):
-    image = await image.read()
-    task = hand_gesture_task.delay(image)
-    return {
-        "task_id":task.id ,
-        "status":task.state }
+async def gesture(image:UploadFile , current_user: str=Depends(get_current_user)):
+    if current_user :
+        image = await image.read()
+        task = hand_gesture_task.delay(image)
+        return {
+            "task_id":task.id ,
+            "status":task.state }
+    else:
+        return {"Error":" You have not signed in yet ❌"}
 
-
+# check tasks in celery
 @app.get("/check_task")
 def task_check(task_id:str):
     result = celery_app.AsyncResult(task_id)
